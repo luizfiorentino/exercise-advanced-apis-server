@@ -1,5 +1,6 @@
 const User = require("../models").user;
 const { Router } = require("express");
+const bcrypt = require("bcrypt");
 
 const router = new Router();
 
@@ -18,8 +19,12 @@ router.post("/", async (req, res, next) => {
     if (!fullName || !email || !password) {
       res.status(400).send("Name, email and password must be provided");
     } else {
-      //const newUser = await User.create({ email, password, fullName });
-      const newUser = await User.create(req.body);
+      const newUser = await User.create({
+        email,
+        password: bcrypt.hashSync(password, 10),
+        fullName,
+      });
+      //const newUser = await User.create(req.body);
       res.json(newUser);
     }
   } catch (e) {
