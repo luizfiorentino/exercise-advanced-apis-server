@@ -12,4 +12,18 @@ router.get("/", async (req, res, next) => {
   }
 });
 
+router.post("/", async (req, res, next) => {
+  try {
+    const { email, password, fullName } = req.body;
+    if (!fullName || !email || !password) {
+      res.status(400).send("Name, email and password must be provided");
+    } else {
+      const newUser = await User.create({ email, password, fullName });
+      res.json(newUser);
+    }
+  } catch (e) {
+    next(e);
+  }
+});
+
 module.exports = router;
