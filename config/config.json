@@ -1,0 +1,21 @@
+{
+  "development": {
+    "url": "postgres://zwnvirfo:C6YaqXMuMm9BPH7SMt36633vHvSnUJ6_@tyke.db.elephantsql.com/zwnvirfo",
+
+    "dialect": "postgres"
+  },
+  "test": {
+    "username": "root",
+    "password": null,
+    "database": "database_test",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "production": {
+    "username": "root",
+    "password": null,
+    "database": "database_production",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  }
+}
