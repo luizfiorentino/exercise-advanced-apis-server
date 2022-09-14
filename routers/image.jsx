@@ -5,20 +5,15 @@ const { toData, toJWT } = require("../auth/jwt.jsx");
 const router = new Router();
 
 router.get("/", async (req, res, next) => {
-  const auth =
-    req.headers.authorization && req.headers.authorization.split(" ");
-  if (auth && auth[0] === "Bearer" && auth[1]) {
-    try {
-      const data = toData(auth[1]);
-      const allImages = await Image.findAll();
-      res.json(allImages);
-    } catch (e) {
-      res.status(400).send("Invalid JWT token");
-    }
-  } else {
-    res.status(401).send({ message: "Please enter valid credentials" });
+  try {
+    const allImages = await Image.findAll();
+    res.json(allImages);
+  } catch (e) {
+    next(e);
   }
 });
+
+//
 
 router.get("/:imageId", async (req, res, next) => {
   try {
@@ -45,5 +40,21 @@ router.post("/", async (req, res, next) => {
     next(e);
   }
 });
+
+// router.get("/", async (req, res, next) => {
+//   const auth =
+//     req.headers.authorization && req.headers.authorization.split(" ");
+//   if (auth && auth[0] === "Bearer" && auth[1]) {
+//     try {
+//       const data = toData(auth[1]);
+//       const allImages = await Image.findAll();
+//       res.json(allImages);
+//     } catch (e) {
+//       res.status(400).send("Invalid JWT token");
+//     }
+//   } else {
+//     res.status(401).send({ message: "Please enter valid credentials" });
+//   }
+// });
 
 module.exports = router;

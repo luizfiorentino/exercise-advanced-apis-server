@@ -1,10 +1,17 @@
 const { Router } = require("express");
+const authMiddleware = require("../auth/middleware.jsx");
 
 const { toJWT, toData } = require("../auth/jwt.jsx");
 const User = require("../models").user;
 const bcrypt = require("bcrypt");
 
 const router = new Router();
+
+router.get("/testAuth", authMiddleware, (req, res) => {
+  res.send({
+    message: `This is a test endpoint, ${req.user.email}`,
+  });
+});
 
 router.post("/login", async (req, res, next) => {
   try {
